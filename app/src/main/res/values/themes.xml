@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.NetNet" parent="Theme.Material3.Dark.NoActionBar">
+    </style>
+
+    <style name="Theme.NetNet" parent="Base.Theme.NetNet" />
+</resources>
