@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.TextView.Normal" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+    <style name="Widget.App.TextView.Normal.Highlight">
+        <item name="android:textColor">@android:color/holo_orange_light</item>
+    </style>
+
+</resources>

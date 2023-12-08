@@ -10,18 +10,17 @@ class OpenDataRepositoryImp : OpenDataRepository {
 
     private val api = ClientManager.API
 
-    override suspend fun getAllCompaniesBalanceSheet(): Flow<ResponseResult<List<BalanceSheet>>> =
-        flow {
-            emit(ResponseResult.Loading)
-            try {
-                val res = api.getAllCompaniesBalanceSheet()
-                if (res.isSuccessful) {
-                    emit(ResponseResult.Success(res.body() ?: emptyList()))
-                } else {
-                    emit(ResponseResult.Success(emptyList()))
-                }
-            } catch (e: Exception) {
-                emit(ResponseResult.Error(e))
+    override suspend fun getAllCompaniesBalanceSheet(): List<BalanceSheet> {
+        return try {
+            val res = api.getAllCompaniesBalanceSheet()
+            if (res.isSuccessful) {
+                res.body() ?: emptyList()
+            } else {
+                emptyList()
             }
+        } catch (e: Exception) {
+            throw Exception(e)
         }
+    }
+
 }

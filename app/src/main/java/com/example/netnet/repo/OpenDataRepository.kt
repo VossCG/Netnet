@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface OpenDataRepository {
 
-   suspend fun getAllCompaniesBalanceSheet(): Flow<ResponseResult<List<BalanceSheet>>>
+    suspend fun getAllCompaniesBalanceSheet(): List<BalanceSheet>
+
 }

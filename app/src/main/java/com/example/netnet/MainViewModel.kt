@@ -1,5 +1,6 @@
 package com.example.netnet
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,18 +17,29 @@ class MainViewModel : ViewModel() {
 
     private val repository: OpenDataRepository = OpenDataRepositoryImp()
 
-    private val _balanceSheets = MutableLiveData<ResponseResult<List<BalanceSheet>>>()
-    val balanceSheet: LiveData<ResponseResult<List<BalanceSheet>>> = _balanceSheets
+    private val _balanceSheets = MutableLiveData<List<BalanceSheet>>()
 
-    fun getAllCompaniesBalanceSheet() {
-        viewModelScope.launch {
-            repository.getAllCompaniesBalanceSheet()
-                .catch { error ->
-                    _balanceSheets.value = ResponseResult.Error(error)
-                }
-                .collect { result ->
-                    _balanceSheets.value = result
-                }
+    private val _selectedBalanceSheet = MutableLiveData<BalanceSheet>()
+    val selectedBalanceSheet: LiveData<BalanceSheet> = _selectedBalanceSheet
+
+
+    suspend fun getAllCompaniesBalanceSheet() {
+        _balanceSheets.value = repository.getAllCompaniesBalanceSheet()
+    }
+
+    fun calculateNetMet(currentAsset: Float, liabilities: Float, capital: Float): Float {
+        val shares = capital / 10f
+        return (currentAsset - liabilities) / shares
+    }
+
+    fun findBalanceSheetByCode(code: String): Boolean {
+        val result = _balanceSheets.value?.find { it.code == code }
+
+        return if (result != null) {
+            _selectedBalanceSheet.value = result!!
+            true
+        } else {
+            false
         }
     }
 }
