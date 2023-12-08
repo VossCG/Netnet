@@ -6,7 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ClientManager {
 
     companion object {
-        const val BASEURL = "https://openapi.twse.com.tw/v1/opendata/"
+        const val BASEURL = "https://openapi.twse.com.tw/v1/"
+
         private val manager = ClientManager()
         val API: ApiService = manager.retrofit.create(ApiService::class.java)
     }
