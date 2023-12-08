@@ -1,4 +1,4 @@
-package com.example.netnet.remote
+package com.example.netnet.model.response
 
 import com.google.gson.annotations.SerializedName
 

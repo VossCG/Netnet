@@ -1,16 +1,14 @@
 package com.example.netnet.repo
 
-import com.example.netnet.remote.BalanceSheet
+import com.example.netnet.model.response.BalanceSheet
 import com.example.netnet.remote.ClientManager
 import com.example.netnet.remote.ResponseResult
 
-class OpenDataRepositoryImp : OpenDataRepository {
+class BalanceSheetRepository {
 
-    private val api = ClientManager.API
-
-    override suspend fun fetchData(): ResponseResult<List<BalanceSheet>> {
+    suspend fun fetchData(): ResponseResult<List<BalanceSheet>> {
         return try {
-            val res = api.getAllCompaniesBalanceSheet()
+            val res = ClientManager.API.getAllCompaniesBalanceSheet()
             if (res.isSuccessful) {
                 ResponseResult.Success(res.body() ?: emptyList())
             } else {

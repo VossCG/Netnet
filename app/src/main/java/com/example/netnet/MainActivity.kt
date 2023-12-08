@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.netnet.databinding.ActivityMainBinding
 import com.example.netnet.extension.showToast
+import com.example.netnet.model.response.BalanceSheet
 import com.example.netnet.remote.ResponseResult
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -65,16 +68,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.selectedBalanceSheet.observe(this) { balanceSheet ->
-            binding.dateTv.text = balanceSheet.getDateText()
-            binding.outputTv.text = balanceSheet.getNetNetText()
-            binding.capitalTv.text = balanceSheet.getCapitalText()
-            binding.bookValueTv.text = balanceSheet.getBookValueText()
-            binding.liabilitiesTv.text = balanceSheet.getLiabilitiesText()
-            binding.companyNameTv.text = balanceSheet.getCompanyNameText()
-            binding.currentAssetTv.text = balanceSheet.getCurrentAssetText()
+        lifecycleScope.launch {
+            launch {
+                viewModel.selectedBalanceSheet.collect { balanceSheet ->
+                    balanceSheet?.let {
+                        setBalanceSheetText(it)
+                    }
+                }
+            }
         }
     }
 
+    private fun setBalanceSheetText(balanceSheet: BalanceSheet) {
+        binding.dateTv.text = balanceSheet.getDateText()
+        binding.outputTv.text = balanceSheet.getNetNetText()
+        binding.capitalTv.text = balanceSheet.getCapitalText()
+        binding.bookValueTv.text = balanceSheet.getBookValueText()
+        binding.liabilitiesTv.text = balanceSheet.getLiabilitiesText()
+        binding.companyNameTv.text = balanceSheet.getCompanyNameText()
+        binding.currentAssetTv.text = balanceSheet.getCurrentAssetText()
+    }
 
 }
