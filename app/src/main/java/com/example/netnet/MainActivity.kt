@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.netnet.databinding.ActivityMainBinding
 import com.example.netnet.extension.showToast
 import com.example.netnet.model.response.BalanceSheet
-import com.example.netnet.remote.ResponseResult
+import com.example.netnet.model.response.ResponseResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        splashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        splashScreen()
         setObserver()
         setListener()
     }
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.balanceSheets.observe(this) { result ->
             when (result) {
                 is ResponseResult.Error -> {
-                    this.showToast("init Data failure")
+                    this.showToast("init BalanceSheet failure")
                 }
 
                 is ResponseResult.Loading -> {}
@@ -68,15 +68,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        lifecycleScope.launch {
-            launch {
-                viewModel.selectedBalanceSheet.collect { balanceSheet ->
-                    balanceSheet?.let {
-                        setBalanceSheetText(it)
-                    }
+        viewModel.stockInfo.observe(this) { result ->
+            when (result) {
+                is ResponseResult.Error -> {
+                    this.showToast("init StockInfo failure")
+                }
+
+                is ResponseResult.Loading -> {}
+                is ResponseResult.Success -> {
+                    viewModel.refreshStockInfo(result.data)
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.selectedBalanceSheet.collect { balanceSheet ->
+                balanceSheet?.let {
+                    setBalanceSheetText(it)
+                }
+            }
+        }
+
     }
 
     private fun setBalanceSheetText(balanceSheet: BalanceSheet) {
@@ -87,6 +99,8 @@ class MainActivity : AppCompatActivity() {
         binding.liabilitiesTv.text = balanceSheet.getLiabilitiesText()
         binding.companyNameTv.text = balanceSheet.getCompanyNameText()
         binding.currentAssetTv.text = balanceSheet.getCurrentAssetText()
+        binding.closingPriceTv.text =
+            "昨日收盤價 : " + viewModel.getStockInfoByCode(balanceSheet.code).closingPrice
     }
 
 }

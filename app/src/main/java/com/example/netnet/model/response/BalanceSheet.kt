@@ -17,27 +17,27 @@ data class BalanceSheet(
 ) {
 
     fun getCompanyNameText(): String {
-        return "公司代號 : $code | 名稱 : $name" ?: ""
+        return "公司代號 : $code \t 名稱 : $name"
     }
 
     fun getDateText(): String {
-        return "年份 : $year | 季度 : $season" ?: ""
+        return "年份 : $year \t 季度 : $season"
     }
 
     fun getCurrentAssetText(): String {
-        return "流動資產 : $currentAsset" ?: ""
+        return "流動資產 : $currentAsset"
     }
 
     fun getLiabilitiesText(): String {
-        return "總負債 : $liabilities" ?: ""
+        return "總負債 : $liabilities"
     }
 
     fun getCapitalText(): String {
-        return "股本 : $capital" ?: ""
+        return "股本 : $capital"
     }
 
     fun getBookValueText(): String {
-        return "每股淨值 : $bookValue" ?: ""
+        return "每股淨值 : $bookValue"
     }
 
     private fun getNetNet(): Float {
