@@ -5,13 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.MotionEvent
 import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
 import com.example.netnet.databinding.ActivityMainBinding
 import com.example.netnet.extension.showToast
-import com.example.netnet.remote.BalanceSheet
 import com.example.netnet.remote.ResponseResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -23,16 +19,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initData()
+        splashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setObserver()
         setListener()
     }
 
-    private fun initData() {
+    private fun splashScreen() {
         runBlocking {
-            viewModel.getAllCompaniesBalanceSheet()
             delay(1000)
         }
     }
@@ -46,32 +41,38 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                viewModel.findBalanceSheetByCode(editable.toString())
+                val inputText = editable.toString()
+                if (inputText.length > 3) {
+                    viewModel.findBalanceSheetByCode(editable.toString())
+                }
             }
-
         })
 
     }
 
     @SuppressLint("SetTextI18n")
     private fun setObserver() {
-        viewModel.selectedBalanceSheet.observe(this) { balanceSheet ->
-            binding.dateTv.text = "年份 : ${balanceSheet.year} | 季度 : ${balanceSheet.season}"
-            binding.companyNameTv.text =
-                "公司代號 : ${balanceSheet.code} | 名稱 : ${balanceSheet.name}"
-            binding.currentAssetTv.text = "流動資產 : ${balanceSheet.currentAsset}"
-            binding.liabilitiesTv.text = "總負債 : ${balanceSheet.liabilities}"
-            binding.capitalTv.text = "股本 : ${balanceSheet.capital}"
-            binding.bookValueTv.text = "每股淨值 : ${balanceSheet.bookValue}"
-            binding.outputTv.text =
-                "清算價值 : ${
-                    viewModel.calculateNetMet(
-                        balanceSheet.currentAsset.toFloat(),
-                        balanceSheet.liabilities.toFloat(),
-                        balanceSheet.capital.toFloat()
-                    )
-                }"
+        viewModel.balanceSheets.observe(this) { result ->
+            when (result) {
+                is ResponseResult.Error -> {
+                    this.showToast("init Data failure")
+                }
 
+                is ResponseResult.Loading -> {}
+                is ResponseResult.Success -> {
+                    viewModel.refreshBalanceSheets(result.data)
+                }
+            }
+        }
+
+        viewModel.selectedBalanceSheet.observe(this) { balanceSheet ->
+            binding.dateTv.text = balanceSheet.getDateText()
+            binding.outputTv.text = balanceSheet.getNetNetText()
+            binding.capitalTv.text = balanceSheet.getCapitalText()
+            binding.bookValueTv.text = balanceSheet.getBookValueText()
+            binding.liabilitiesTv.text = balanceSheet.getLiabilitiesText()
+            binding.companyNameTv.text = balanceSheet.getCompanyNameText()
+            binding.currentAssetTv.text = balanceSheet.getCurrentAssetText()
         }
     }
 
