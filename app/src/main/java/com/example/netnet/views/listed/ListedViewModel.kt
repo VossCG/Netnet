@@ -1,4 +1,4 @@
-package com.example.netnet
+package com.example.netnet.views.listed
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class ListedViewModel : ViewModel() {
 
     private val stockRepo = StockRepository()
     private val balanceSheetRepo = BalanceSheetRepository()

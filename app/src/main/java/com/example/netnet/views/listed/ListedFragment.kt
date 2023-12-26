@@ -1,39 +1,30 @@
-package com.example.netnet
+package com.example.netnet.views.listed
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.activity.viewModels
+import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.netnet.databinding.ActivityMainBinding
+import com.example.netnet.databinding.FragListedBinding
 import com.example.netnet.extension.showToast
-import com.example.netnet.model.listed.ListedBalanceSheet
 import com.example.netnet.model.ResponseResult
-import kotlinx.coroutines.delay
+import com.example.netnet.model.listed.ListedBalanceSheet
+import com.example.netnet.views.BaseFragment
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-class MainActivity : AppCompatActivity() {
+class ListedFragment : BaseFragment<FragListedBinding>(FragListedBinding::inflate) {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: ListedViewModel by viewModels()
 
-    private lateinit var binding: ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        splashScreen()
-        setObserver()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         setListener()
+        setObserver()
     }
 
-    private fun splashScreen() {
-        runBlocking {
-            delay(1000)
-        }
-    }
 
     private fun setListener() {
         binding.searchInput.addTextChangedListener(object : TextWatcher {
@@ -58,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.listedBalanceSheets.observe(this) { result ->
             when (result) {
                 is ResponseResult.Error -> {
-                    this.showToast("init BalanceSheet failure")
+                    requireContext().showToast("init BalanceSheet failure")
                 }
 
                 is ResponseResult.Loading -> {}
@@ -71,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.listedStock.observe(this) { result ->
             when (result) {
                 is ResponseResult.Error -> {
-                    this.showToast("init StockInfo failure")
+                    requireContext().showToast("init StockInfo failure")
                 }
 
                 is ResponseResult.Loading -> {}
