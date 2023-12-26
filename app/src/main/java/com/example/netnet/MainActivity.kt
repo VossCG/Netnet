@@ -9,8 +9,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.netnet.databinding.ActivityMainBinding
 import com.example.netnet.extension.showToast
-import com.example.netnet.model.response.BalanceSheet
-import com.example.netnet.model.response.ResponseResult
+import com.example.netnet.model.listed.ListedBalanceSheet
+import com.example.netnet.model.ResponseResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setObserver() {
-        viewModel.balanceSheets.observe(this) { result ->
+        viewModel.listedBalanceSheets.observe(this) { result ->
             when (result) {
                 is ResponseResult.Error -> {
                     this.showToast("init BalanceSheet failure")
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.stockInfo.observe(this) { result ->
+        viewModel.listedStock.observe(this) { result ->
             when (result) {
                 is ResponseResult.Error -> {
                     this.showToast("init StockInfo failure")
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            viewModel.selectedBalanceSheet.collect { balanceSheet ->
+            viewModel.selectedListedBalanceSheet.collect { balanceSheet ->
                 balanceSheet?.let {
                     setBalanceSheetText(it)
                 }
@@ -91,16 +91,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setBalanceSheetText(balanceSheet: BalanceSheet) {
-        binding.dateTv.text = balanceSheet.getDateText()
-        binding.outputTv.text = balanceSheet.getNetNetText()
-        binding.capitalTv.text = balanceSheet.getCapitalText()
-        binding.bookValueTv.text = balanceSheet.getBookValueText()
-        binding.liabilitiesTv.text = balanceSheet.getLiabilitiesText()
-        binding.companyNameTv.text = balanceSheet.getCompanyNameText()
-        binding.currentAssetTv.text = balanceSheet.getCurrentAssetText()
+    private fun setBalanceSheetText(listedBalanceSheet: ListedBalanceSheet) {
+        binding.dateTv.text = listedBalanceSheet.getDateText()
+        binding.outputTv.text = listedBalanceSheet.getNetNetText()
+        binding.capitalTv.text = listedBalanceSheet.getCapitalText()
+        binding.bookValueTv.text = listedBalanceSheet.getBookValueText()
+        binding.liabilitiesTv.text = listedBalanceSheet.getLiabilitiesText()
+        binding.companyNameTv.text = listedBalanceSheet.getCompanyNameText()
+        binding.currentAssetTv.text = listedBalanceSheet.getCurrentAssetText()
         binding.closingPriceTv.text =
-            "昨日收盤價 : " + viewModel.getStockInfoByCode(balanceSheet.code).closingPrice
+            "昨日收盤價 : " + viewModel.getStockInfoByCode(listedBalanceSheet.code).closingPrice
     }
 
 }

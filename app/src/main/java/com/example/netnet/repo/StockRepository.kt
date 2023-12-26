@@ -2,17 +2,17 @@ package com.example.netnet.repo
 
 import android.util.Log
 import com.example.netnet.DEBUG_TAG
-import com.example.netnet.model.listed.ListedBalanceSheet
+import com.example.netnet.model.listed.ListedStock
 import com.example.netnet.remote.listed.ListedClientManager
 import com.example.netnet.model.ResponseResult
-import com.example.netnet.model.otc.OTCBalanceSheet
+import com.example.netnet.model.otc.OTCStock
 import com.example.netnet.remote.otc.OTCClientManager
 
-class BalanceSheetRepository {
+class StockRepository {
 
-    suspend fun fetchListedData(): ResponseResult<List<ListedBalanceSheet>> {
+    suspend fun fetchListedData(): ResponseResult<List<ListedStock>> {
         return try {
-            val res = ListedClientManager.API.getAllCompaniesBalanceSheet()
+            val res = ListedClientManager.API.getAllDailyStock()
             if (res.isSuccessful) {
                 Log.d(DEBUG_TAG, res.body().toString())
                 ResponseResult.Success(res.body() ?: emptyList())
@@ -24,9 +24,9 @@ class BalanceSheetRepository {
         }
     }
 
-    suspend fun fetchOTCData(): ResponseResult<List<OTCBalanceSheet>> {
+    suspend fun fetchOTCData(): ResponseResult<List<OTCStock>> {
         return try {
-            val res = OTCClientManager.API.getAllCompaniesBalanceSheet()
+            val res = OTCClientManager.API.getAllDailyStock()
             if (res.isSuccessful) {
                 Log.d(DEBUG_TAG, res.body().toString())
                 ResponseResult.Success(res.body() ?: emptyList())
@@ -37,5 +37,4 @@ class BalanceSheetRepository {
             ResponseResult.Error(e)
         }
     }
-
 }

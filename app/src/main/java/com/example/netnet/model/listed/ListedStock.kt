@@ -1,8 +1,8 @@
-package com.example.netnet.model.response
+package com.example.netnet.model.listed
 
 import com.google.gson.annotations.SerializedName
 
-data class StockInfo(
+data class ListedStock(
     @SerializedName("Code") val code: String = "",
     @SerializedName("Name") val name: String = "",
     @SerializedName("TradeVolume") val tradeVolume: String = "",

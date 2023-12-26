@@ -1,8 +1,8 @@
-package com.example.netnet.model.response
+package com.example.netnet.model.listed
 
 import com.google.gson.annotations.SerializedName
 
-data class BalanceSheet(
+data class ListedBalanceSheet(
     @SerializedName("年度") val year: String = "",
     @SerializedName("季別") val season: String = "",
     @SerializedName("股本") val capital: String = "",

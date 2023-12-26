@@ -4,53 +4,57 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.netnet.model.response.BalanceSheet
-import com.example.netnet.model.response.StockInfo
-import com.example.netnet.model.response.ResponseResult
+import com.example.netnet.model.listed.ListedBalanceSheet
+import com.example.netnet.model.listed.ListedStock
+import com.example.netnet.model.ResponseResult
 import com.example.netnet.repo.BalanceSheetRepository
-import com.example.netnet.repo.StockInfoRepository
+import com.example.netnet.repo.StockRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val stockInfoRepo = StockInfoRepository()
+    private val stockRepo = StockRepository()
     private val balanceSheetRepo = BalanceSheetRepository()
 
-    private val _balanceSheets = MutableLiveData<ResponseResult<List<BalanceSheet>>>()
-    val balanceSheets: LiveData<ResponseResult<List<BalanceSheet>>> = _balanceSheets
+    private val _listedBalanceSheets = MutableLiveData<ResponseResult<List<ListedBalanceSheet>>>()
+    val listedBalanceSheets: LiveData<ResponseResult<List<ListedBalanceSheet>>> =
+        _listedBalanceSheets
 
-    private val _stockInfo = MutableLiveData<ResponseResult<List<StockInfo>>>()
-    val stockInfo: LiveData<ResponseResult<List<StockInfo>>> = _stockInfo
+    private val _listedStock = MutableLiveData<ResponseResult<List<ListedStock>>>()
+    val listedStock: LiveData<ResponseResult<List<ListedStock>>> = _listedStock
 
-    private var allBalanceSheets: List<BalanceSheet> = emptyList()
-    private var allStockInfo: List<StockInfo> = emptyList()
+    private var allListedBalanceSheets: List<ListedBalanceSheet> = emptyList()
+    private var allListedStock: List<ListedStock> = emptyList()
 
-    private val _selectedBalanceSheet = MutableStateFlow<BalanceSheet?>(null)
-    val selectedBalanceSheet: StateFlow<BalanceSheet?> = _selectedBalanceSheet
+    private val _selectedListedBalanceSheet = MutableStateFlow<ListedBalanceSheet?>(null)
+    val selectedListedBalanceSheet: StateFlow<ListedBalanceSheet?> = _selectedListedBalanceSheet
 
     init {
         viewModelScope.launch {
-            _balanceSheets.value = balanceSheetRepo.fetchData()
-            _stockInfo.value = stockInfoRepo.fetchData()
+            _listedBalanceSheets.value = balanceSheetRepo.fetchListedData()
+            _listedStock.value = stockRepo.fetchListedData()
+
+            stockRepo.fetchOTCData()
+            balanceSheetRepo.fetchOTCData()
         }
     }
 
-    fun refreshBalanceSheets(balanceSheets: List<BalanceSheet>) {
-        allBalanceSheets = balanceSheets
+    fun refreshBalanceSheets(listedBalanceSheets: List<ListedBalanceSheet>) {
+        allListedBalanceSheets = listedBalanceSheets
     }
 
-    fun refreshStockInfo(stockInfo: List<StockInfo>) {
-        allStockInfo = stockInfo
+    fun refreshStockInfo(listedStock: List<ListedStock>) {
+        allListedStock = listedStock
     }
 
-    fun getStockInfoByCode(code: String): StockInfo {
-        return allStockInfo.find { it.code == code } ?: StockInfo()
+    fun getStockInfoByCode(code: String): ListedStock {
+        return allListedStock.find { it.code == code } ?: ListedStock()
     }
 
     fun findBalanceSheetByCode(code: String) {
-        _selectedBalanceSheet.value = allBalanceSheets.find { it.code == code }
+        _selectedListedBalanceSheet.value = allListedBalanceSheets.find { it.code == code }
     }
 
 }
