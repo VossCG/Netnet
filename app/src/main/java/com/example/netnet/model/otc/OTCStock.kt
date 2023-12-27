@@ -18,5 +18,9 @@ data class OTCStock(
     @SerializedName("LatesAskPrice") val latestAskPrice: String,
     @SerializedName("Capitals") val capitals: String,
     @SerializedName("NextLimitUp") val nextLimitUp: String,
-    @SerializedName("NextLimitDown") val nextLimitDown: String,
-)
+    @SerializedName("NextLimitDown") val nextLimitDown: String
+){
+    fun getClosingPriceText():String{
+        return "昨日收盤價 : $close"
+    }
+}

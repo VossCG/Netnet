@@ -27,7 +27,7 @@ class ListedFragment : BaseFragment<FragListedBinding>(FragListedBinding::inflat
 
 
     private fun setListener() {
-        binding.searchInput.addTextChangedListener(object : TextWatcher {
+        binding.netNetLayout.searchInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -37,7 +37,7 @@ class ListedFragment : BaseFragment<FragListedBinding>(FragListedBinding::inflat
             override fun afterTextChanged(editable: Editable?) {
                 val inputText = editable.toString()
                 if (inputText.length > 3) {
-                    viewModel.findBalanceSheetByCode(editable.toString())
+                    viewModel.findBalanceSheet(editable.toString())
                 }
             }
         })
@@ -46,10 +46,10 @@ class ListedFragment : BaseFragment<FragListedBinding>(FragListedBinding::inflat
 
     @SuppressLint("SetTextI18n")
     private fun setObserver() {
-        viewModel.listedBalanceSheets.observe(this) { result ->
+        viewModel.listedBalanceSheets.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResponseResult.Error -> {
-                    requireContext().showToast("init BalanceSheet failure")
+                    requireContext().showToast("init Listed BalanceSheet failure")
                 }
 
                 is ResponseResult.Loading -> {}
@@ -59,15 +59,15 @@ class ListedFragment : BaseFragment<FragListedBinding>(FragListedBinding::inflat
             }
         }
 
-        viewModel.listedStock.observe(this) { result ->
+        viewModel.listedStock.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResponseResult.Error -> {
-                    requireContext().showToast("init StockInfo failure")
+                    requireContext().showToast("init Listed Stock failure")
                 }
 
                 is ResponseResult.Loading -> {}
                 is ResponseResult.Success -> {
-                    viewModel.refreshStockInfo(result.data)
+                    viewModel.refreshStock(result.data)
                 }
             }
         }
@@ -75,23 +75,23 @@ class ListedFragment : BaseFragment<FragListedBinding>(FragListedBinding::inflat
         lifecycleScope.launch {
             viewModel.selectedListedBalanceSheet.collect { balanceSheet ->
                 balanceSheet?.let {
-                    setBalanceSheetText(it)
+                    setBalanceSheetUI(it)
                 }
             }
         }
 
     }
 
-    private fun setBalanceSheetText(listedBalanceSheet: ListedBalanceSheet) {
-        binding.dateTv.text = listedBalanceSheet.getDateText()
-        binding.outputTv.text = listedBalanceSheet.getNetNetText()
-        binding.capitalTv.text = listedBalanceSheet.getCapitalText()
-        binding.bookValueTv.text = listedBalanceSheet.getBookValueText()
-        binding.liabilitiesTv.text = listedBalanceSheet.getLiabilitiesText()
-        binding.companyNameTv.text = listedBalanceSheet.getCompanyNameText()
-        binding.currentAssetTv.text = listedBalanceSheet.getCurrentAssetText()
-        binding.closingPriceTv.text =
-            "昨日收盤價 : " + viewModel.getStockInfoByCode(listedBalanceSheet.code).closingPrice
+    private fun setBalanceSheetUI(listedBalanceSheet: ListedBalanceSheet) {
+        binding.netNetLayout.dateTv.text = listedBalanceSheet.getDateText()
+        binding.netNetLayout.outputTv.text = listedBalanceSheet.getNetNetText()
+        binding.netNetLayout.capitalTv.text = listedBalanceSheet.getCapitalText()
+        binding.netNetLayout.bookValueTv.text = listedBalanceSheet.getBookValueText()
+        binding.netNetLayout.liabilitiesTv.text = listedBalanceSheet.getLiabilitiesText()
+        binding.netNetLayout.companyNameTv.text = listedBalanceSheet.getCompanyNameText()
+        binding.netNetLayout.currentAssetTv.text = listedBalanceSheet.getCurrentAssetText()
+        binding.netNetLayout.closingPriceTv.text =
+            viewModel.getStock(listedBalanceSheet.code)?.getClosingPriceText() ?: "not found"
     }
 
 }

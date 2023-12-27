@@ -2,5 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="netnet">#8BA998</color>
+    <color name="morandi_green">#8BA998</color>
+    <color name="morandi_blue">#5E71D9</color>
+    <color name="warning">#F1A622</color>
 </resources>

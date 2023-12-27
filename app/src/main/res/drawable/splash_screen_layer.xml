@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/netnet" />
+    <item android:drawable="@color/morandi_green" />
 
     <item android:drawable="@drawable/net_net_launcher_foreground" />
 

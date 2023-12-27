@@ -6,8 +6,17 @@
     </style>
 
 
+    <style name="Widget.App.TextView.Normal.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Widget.App.TextView.Normal.Highlight">
         <item name="android:textColor">@android:color/holo_orange_light</item>
+    </style>
+
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardBackgroundColor">@android:color/darker_gray</item>
     </style>
 
 </resources>

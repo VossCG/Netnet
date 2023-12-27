@@ -46,6 +46,6 @@ data class ListedBalanceSheet(
     }
 
     fun getNetNetText(): String {
-        return "清算價值 : ${getNetNet()}"
+        return "$ ${getNetNet()}"
     }
 }

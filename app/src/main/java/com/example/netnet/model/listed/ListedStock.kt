@@ -13,4 +13,9 @@ data class ListedStock(
     @SerializedName("ClosingPrice") val closingPrice: String = "",
     @SerializedName("Change") val change: String = "",
     @SerializedName("Transaction") val transaction: String = "",
-)
+) {
+
+    fun getClosingPriceText(): String {
+        return "昨日收盤價 : $closingPrice"
+    }
+}

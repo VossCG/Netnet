@@ -6,13 +6,11 @@
     </style>
 
     <style name="Theme.NetNet" parent="Base.Theme.NetNet">
-        <item name="colorPrimary">@color/netnet</item>
+        <item name="colorPrimary">@color/morandi_green</item>
         <item name="colorOnPrimary">@android:color/black</item>
-        <!-- Secondary brand color. -->
-        <!--        <item name="colorSecondary">@color/forest</item>-->
-        <!--        <item name="colorSecondaryVariant">@color/lightGreen</item>-->
-        <!--        <item name="colorOnSecondary">@color/white</item>-->
-        <!-- Status bar color. -->
+        <item name="colorSecondary">#7e9688</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@android:color/holo_orange_dark</item>
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowBackground">@drawable/splash_screen_layer</item>
         <item name="android:windowFullscreen">true</item>

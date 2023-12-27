@@ -25,8 +25,8 @@ class ListedViewModel : ViewModel() {
     private val _listedStock = MutableLiveData<ResponseResult<List<ListedStock>>>()
     val listedStock: LiveData<ResponseResult<List<ListedStock>>> = _listedStock
 
-    private var allListedBalanceSheets: List<ListedBalanceSheet> = emptyList()
-    private var allListedStock: List<ListedStock> = emptyList()
+    private var allBalanceSheets: List<ListedBalanceSheet> = emptyList()
+    private var allStock: List<ListedStock> = emptyList()
 
     private val _selectedListedBalanceSheet = MutableStateFlow<ListedBalanceSheet?>(null)
     val selectedListedBalanceSheet: StateFlow<ListedBalanceSheet?> = _selectedListedBalanceSheet
@@ -35,26 +35,30 @@ class ListedViewModel : ViewModel() {
         viewModelScope.launch {
             _listedBalanceSheets.value = balanceSheetRepo.fetchListedData()
             _listedStock.value = stockRepo.fetchListedData()
-
-            stockRepo.fetchOTCData()
-            balanceSheetRepo.fetchOTCData()
         }
     }
 
     fun refreshBalanceSheets(listedBalanceSheets: List<ListedBalanceSheet>) {
-        allListedBalanceSheets = listedBalanceSheets
+        allBalanceSheets = listedBalanceSheets
     }
 
-    fun refreshStockInfo(listedStock: List<ListedStock>) {
-        allListedStock = listedStock
+    fun refreshStock(listedStock: List<ListedStock>) {
+        allStock = listedStock
     }
 
-    fun getStockInfoByCode(code: String): ListedStock {
-        return allListedStock.find { it.code == code } ?: ListedStock()
+    fun getStock(code: String): ListedStock? {
+        return allStock.find { it.code == code }
     }
 
-    fun findBalanceSheetByCode(code: String) {
-        _selectedListedBalanceSheet.value = allListedBalanceSheets.find { it.code == code }
+    fun findBalanceSheet(code: String): Boolean {
+        val balanceSheet = allBalanceSheets.find { it.code == code }
+
+        return if (balanceSheet != null) {
+            _selectedListedBalanceSheet.value = balanceSheet
+            true
+        } else {
+            false
+        }
     }
 
 }
