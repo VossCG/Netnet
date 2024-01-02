@@ -1,4 +1,4 @@
-package com.example.netnet.remote
+package com.example.netnet.model
 
 sealed class ResponseResult<out T> {
     data class Success<out T>(val data: T) : ResponseResult<T>()

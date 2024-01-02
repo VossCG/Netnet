@@ -1,14 +1,15 @@
-package com.example.netnet.remote
+package com.example.netnet.remote.listed
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ClientManager {
+class ListedClientManager {
 
     companion object {
-        const val BASEURL = "https://openapi.twse.com.tw/v1/opendata/"
-        private val manager = ClientManager()
-        val API: ApiService = manager.retrofit.create(ApiService::class.java)
+        const val BASEURL = "https://openapi.twse.com.tw/v1/"
+
+        private val manager = ListedClientManager()
+        val API: ListedService = manager.retrofit.create(ListedService::class.java)
     }
 
     private val retrofit: Retrofit = Retrofit.Builder()
