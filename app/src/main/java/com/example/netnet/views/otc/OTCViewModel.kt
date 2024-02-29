@@ -9,6 +9,7 @@ import com.example.netnet.model.otc.OTCBalanceSheet
 import com.example.netnet.model.otc.OTCStock
 import com.example.netnet.repo.BalanceSheetRepository
 import com.example.netnet.repo.StockRepository
+import com.example.netnet.repo.TwseRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 class OTCViewModel : ViewModel() {
 
     private val stockRepo: StockRepository = StockRepository()
+    private val twseRepo: TwseRepo = TwseRepo()
     private val balanceSheetRepo: BalanceSheetRepository = BalanceSheetRepository()
 
     private val _stock = MutableLiveData<ResponseResult<List<OTCStock>>>()
@@ -35,6 +37,7 @@ class OTCViewModel : ViewModel() {
         viewModelScope.launch {
             _stock.value = stockRepo.fetchOTCData()
             _balanceSheet.value = balanceSheetRepo.fetchOTCData()
+            twseRepo.fetchTwseData()
         }
     }
 
