@@ -1,62 +1,61 @@
 package com.example.netnet.views.balancesheet
 
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.netnet.databinding.LayoutSheetBinding
+import com.example.netnet.databinding.LayoutNetnetBinding
 import com.example.netnet.extension.toast
-import com.example.netnet.model.ResponseResult
+import com.example.netnet.model.twse.TwseListedBalanceSheet
 import com.example.netnet.views.BaseFragment
 
-class BalanceSheetFragment : BaseFragment<LayoutSheetBinding>(LayoutSheetBinding::inflate) {
+class BalanceSheetFragment : BaseFragment<LayoutNetnetBinding>(LayoutNetnetBinding::inflate) {
 
-    private val balanceSheetAdapter: BalanceSheetAdapter by lazy { BalanceSheetAdapter() }
     private val viewModel: BalanceSheetViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setRecycler()
-        setObserver()
         setListener()
+        setObserver()
     }
 
     private fun setListener() {
-        binding.searchBtn.setOnClickListener {
-            val code = binding.searchInput.text.toString()
-            viewModel.queryByCode(code)
-        }
+        binding.searchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(editable: Editable?) {
+                val inputString = editable.toString()
+                if (inputString.length > 3) {
+                    if (!viewModel.findBalanceSheet(inputString)) {
+                        toast("$inputString not found")
+                    }
+                }
+            }
+
+        })
     }
 
     private fun setObserver() {
-
-        viewModel.balanceSheet.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is ResponseResult.Success -> {
-                    Log.d("BalanceSheet", result.data.toString())
-                    if (result.data.isEmpty()) {
-                        toast("not found")
-                    } else {
-                        balanceSheetAdapter.submitList(result.data)
-                    }
-                }
-
-                is ResponseResult.Error -> {
-                    toast(result.exception.message.toString())
-                }
-
-                is ResponseResult.Loading -> {}
+        viewModel.selectedBalanceSheet.observe(viewLifecycleOwner) { balanceSheet ->
+            balanceSheet?.let {
+                setBalanceSheetUI(balanceSheet)
             }
         }
     }
 
-
-    private fun setRecycler() {
-        binding.sheetRecycler.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = balanceSheetAdapter
+    private fun setBalanceSheetUI(balanceSheet: TwseListedBalanceSheet) {
+        binding.apply {
+            bookValueTv.text = balanceSheet.getBookValueText()
+            dateTv.text = balanceSheet.getDateText()
+            capitalTv.text = balanceSheet.getCapitalText()
+            companyNameTv.text = balanceSheet.getCompanyNameText()
+            currentAssetTv.text = balanceSheet.getCurrentAssetText()
+            liabilitiesTv.text = balanceSheet.getLiabilitiesText()
+            netnetTv.text = balanceSheet.getNetNetText()
         }
     }
+
 }

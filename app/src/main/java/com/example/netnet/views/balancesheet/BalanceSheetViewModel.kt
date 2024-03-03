@@ -1,25 +1,37 @@
 package com.example.netnet.views.balancesheet
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.netnet.model.BalanceSheetRow
-import com.example.netnet.model.ResponseResult
-import com.example.netnet.repo.BalanceRepository
+import com.example.netnet.model.twse.TwseListedBalanceSheet
+import com.example.netnet.repo.TwseRepository
 import kotlinx.coroutines.launch
 
 class BalanceSheetViewModel : ViewModel() {
-    private val balanceRepository = BalanceRepository()
+    private val twseRepository = TwseRepository()
 
-    private val _balanceSheet = MutableLiveData<ResponseResult<List<BalanceSheetRow>>>()
-    val balanceSheet: LiveData<ResponseResult<List<BalanceSheetRow>>> = _balanceSheet
+    private val _twseListedBalanceSheets = MutableLiveData<List<TwseListedBalanceSheet>>()
+    val twseListedBalanceSheets: LiveData<List<TwseListedBalanceSheet>> = _twseListedBalanceSheets
 
-    fun queryByCode(code: String) {
+    private val _selectedBalanceSheet = MutableLiveData<TwseListedBalanceSheet?>()
+    val selectedBalanceSheet: LiveData<TwseListedBalanceSheet?> = _selectedBalanceSheet
+
+    init {
         viewModelScope.launch {
-            Log.d("BalanceSheet","query $code")
-            _balanceSheet.value = balanceRepository.queryByCode(code)
+            _twseListedBalanceSheets.value = twseRepository.getBalanceSheet()
         }
     }
+
+    fun findBalanceSheet(code: String): Boolean {
+        val balanceSheet = _twseListedBalanceSheets.value?.find { it.code == code }
+
+        return if (balanceSheet != null) {
+            _selectedBalanceSheet.value = balanceSheet
+            true
+        } else {
+            false
+        }
+    }
+
 }

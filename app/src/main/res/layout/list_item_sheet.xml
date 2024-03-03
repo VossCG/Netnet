@@ -6,9 +6,8 @@
 
     <TextView
         android:id="@+id/item_tv"
-        style="@style/Widget.App.TextView.Normal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

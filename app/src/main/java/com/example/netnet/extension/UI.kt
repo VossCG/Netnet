@@ -16,3 +16,8 @@ inline fun Context.alertDialog(init: AlertDialog.Builder.() -> Unit): AlertDialo
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+fun dpToPx(context: Context, dp: Float): Int {
+    val scale = context.resources.displayMetrics.density
+    return (dp * scale + 0.5f).toInt()
+}
