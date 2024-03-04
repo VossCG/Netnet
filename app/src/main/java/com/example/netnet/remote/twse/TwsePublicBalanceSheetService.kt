@@ -7,22 +7,22 @@ import retrofit2.http.GET
 interface TwsePublicBalanceSheetService {
 
     // 公發公司
-    @GET("v1/opendata/t187ap07_X_bd")
+    @GET("opendata/t187ap07_X_bd")
     suspend fun getBD(): Response<List<TwseListedBalanceSheet>>
 
-    @GET("v1/opendata/t187ap07_X_ci")
+    @GET("opendata/t187ap07_X_ci")
     suspend fun getCI(): Response<List<TwseListedBalanceSheet>>
 
-    @GET("v1/opendata/t187ap07_X_fh")
+    @GET("opendata/t187ap07_X_fh")
     suspend fun getFH(): Response<List<TwseListedBalanceSheet>>
 
-    @GET("v1/opendata/t187ap07_X_ins")
+    @GET("opendata/t187ap07_X_ins")
     suspend fun getINS(): Response<List<TwseListedBalanceSheet>>
 
-    @GET("v1/opendata/t187ap07_X_mim")
+    @GET("opendata/t187ap07_X_mim")
     suspend fun getMIM(): Response<List<TwseListedBalanceSheet>>
 
-    @GET("v1/opendata/t187ap07_X_basi")
+    @GET("opendata/t187ap07_X_basi")
     suspend fun getBASI(): Response<List<TwseListedBalanceSheet>>
 
 

@@ -7,22 +7,22 @@ import retrofit2.http.GET
 interface TwseListedIncomeStatementService {
 
     // 上市公司
-    @GET("v1/opendata/t187ap06_L_bd")
+    @GET("opendata/t187ap06_L_bd")
     suspend fun getBD(): Response<List<TwseListedIncomeStatement>>
 
-    @GET("v1/opendata/t187ap06_L_ci")
+    @GET("opendata/t187ap06_L_ci")
     suspend fun getCI(): Response<List<TwseListedIncomeStatement>>
 
-    @GET("v1/opendata/t187ap06_L_fh")
+    @GET("opendata/t187ap06_L_fh")
     suspend fun getFH(): Response<List<TwseListedIncomeStatement>>
 
-    @GET("v1/opendata/t187ap06_L_ins")
+    @GET("opendata/t187ap06_L_ins")
     suspend fun getINS(): Response<List<TwseListedIncomeStatement>>
 
-    @GET("v1/opendata/t187ap06_L_mim")
+    @GET("opendata/t187ap06_L_mim")
     suspend fun getMIM(): Response<List<TwseListedIncomeStatement>>
 
-    @GET("v1/opendata/t187ap06_L_basi")
+    @GET("opendata/t187ap06_L_basi")
     suspend fun getBASI(): Response<List<TwseListedIncomeStatement>>
 
 
