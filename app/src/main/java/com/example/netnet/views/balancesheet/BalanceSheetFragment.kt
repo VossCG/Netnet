@@ -1,16 +1,16 @@
 package com.example.netnet.views.balancesheet
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
-import com.example.netnet.databinding.LayoutNetnetBinding
-import com.example.netnet.extension.toast
+import com.example.netnet.R
+import com.example.netnet.databinding.LayoutBalanceSheetBinding
 import com.example.netnet.model.twse.TwseListedBalanceSheet
 import com.example.netnet.views.BaseFragment
 
-class BalanceSheetFragment : BaseFragment<LayoutNetnetBinding>(LayoutNetnetBinding::inflate) {
+class BalanceSheetFragment :
+    BaseFragment<LayoutBalanceSheetBinding>(LayoutBalanceSheetBinding::inflate) {
 
     private val viewModel: BalanceSheetViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -18,24 +18,14 @@ class BalanceSheetFragment : BaseFragment<LayoutNetnetBinding>(LayoutNetnetBindi
 
         setListener()
         setObserver()
+
     }
 
     private fun setListener() {
-        binding.searchInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(editable: Editable?) {
-                val inputString = editable.toString()
-                if (inputString.length > 3) {
-                    if (!viewModel.findBalanceSheet(inputString)) {
-                        toast("$inputString not found")
-                    }
-                }
-            }
-
-        })
+        binding.codeDropdownMenu.setOnItemClickListener { parent, view, position, id ->
+            val code = parent.getItemAtPosition(position).toString()
+            viewModel.findBalanceSheet(code)
+        }
     }
 
     private fun setObserver() {
@@ -44,17 +34,35 @@ class BalanceSheetFragment : BaseFragment<LayoutNetnetBinding>(LayoutNetnetBindi
                 setBalanceSheetUI(balanceSheet)
             }
         }
+        viewModel.allCompaniesCode.observe(viewLifecycleOwner) { allCompaniesCode ->
+            binding.codeDropdownMenu.setAdapter(
+                ArrayAdapter(
+                    requireContext(),
+                    R.layout.item_dropmenu,
+                    allCompaniesCode
+                )
+            )
+        }
     }
 
     private fun setBalanceSheetUI(balanceSheet: TwseListedBalanceSheet) {
         binding.apply {
-            bookValueTv.text = balanceSheet.getBookValueText()
-            dateTv.text = balanceSheet.getDateText()
-            capitalTv.text = balanceSheet.getCapitalText()
-            companyNameTv.text = balanceSheet.getCompanyNameText()
-            currentAssetTv.text = balanceSheet.getCurrentAssetText()
-            liabilitiesTv.text = balanceSheet.getLiabilitiesText()
-            netnetTv.text = balanceSheet.getNetNetText()
+            yearTv.text = "年度：" + balanceSheet.year
+            seasonTv.text = "季度：" + balanceSheet.season
+            currentAssetTv.setText(balanceSheet.currentAssets)
+            nonCurrentAssetTv.setText(balanceSheet.nonCurrentAssets)
+            totalAssetsTv.setText(balanceSheet.totalAssets)
+            currentLiabilitiesTv.setText(balanceSheet.currentLiabilities)
+            nonCurrentLiabilitiesTv.setText(balanceSheet.nonCurrentLiabilities)
+            totalLiabilitiesTv.setText(balanceSheet.totalLiabilities)
+            capitalTv.setText(balanceSheet.capital)
+            capitalSurplusTv.setText(balanceSheet.capitalSurplus)
+            retainedEarningsTv.setText(balanceSheet.retainedEarnings)
+            treasuryStockTv.setText(balanceSheet.treasuryStock)
+            nonControllingInterestsTv.setText(balanceSheet.nonControllingInterests)
+            otherEquityTv.setText(balanceSheet.otherEquity)
+            totalEquityAmountTv.setText(balanceSheet.totalEquityAmount)
+            netValuePerShareTv.setText(balanceSheet.netValuePerShare)
         }
     }
 
