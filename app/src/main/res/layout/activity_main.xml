@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/fixedTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorGravity="stretch"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/white"
-        />
-
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/tabViewPager2"
+    <FrameLayout
+        android:id="@+id/splash_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        />
+        android:background="@drawable/netnet_layer"
+        >
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="160dp"
+            android:indeterminate="true"
+            app:indicatorColor="@color/morandi_blue"
+            app:indicatorSize="120dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/container_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/fixedTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorGravity="stretch"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/white" />
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/tabViewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:padding="12dp" />
+    </LinearLayout>
+
+
+</FrameLayout>

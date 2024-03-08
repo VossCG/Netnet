@@ -49,6 +49,7 @@ class BalanceSheetFragment :
         binding.apply {
             yearTv.text = "年度：" + balanceSheet.year
             seasonTv.text = "季度：" + balanceSheet.season
+            codeDropdownInputLayout.suffixText = balanceSheet.name
             currentAssetTv.setText(balanceSheet.currentAssets)
             nonCurrentAssetTv.setText(balanceSheet.nonCurrentAssets)
             totalAssetsTv.setText(balanceSheet.totalAssets)

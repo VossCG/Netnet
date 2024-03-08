@@ -7,11 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.netnet.model.twse.TwseListedBalanceSheet
 import com.example.netnet.repo.TwseRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class BalanceSheetViewModel : ViewModel() {
     private val twseRepository = TwseRepository()
-
     private val _twseListedBalanceSheets = MutableLiveData<List<TwseListedBalanceSheet>>()
     private val _selectedBalanceSheet = MutableLiveData<TwseListedBalanceSheet?>()
     val selectedBalanceSheet: LiveData<TwseListedBalanceSheet?> = _selectedBalanceSheet
@@ -23,7 +21,10 @@ class BalanceSheetViewModel : ViewModel() {
         viewModelScope.launch {
             val allBalanceSheets = twseRepository.getBalanceSheet()
             _twseListedBalanceSheets.value = allBalanceSheets
-            _allCompaniesCode.value = allBalanceSheets.map { it.code }
+            _allCompaniesCode.value = allBalanceSheets
+                .map { it.code }
+                .sortedBy { it.toIntOrNull() }
+                .filterNot { it.isBlank() }
         }
     }
 

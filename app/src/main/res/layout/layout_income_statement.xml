@@ -7,7 +7,6 @@
     android:background="@color/black"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"
-            android:layout_weight="0.8"
+            android:layout_weight="1"
             app:contentPadding="12dp">
 
             <LinearLayout
@@ -50,6 +49,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
             </LinearLayout>
+
+
         </com.google.android.material.card.MaterialCardView>
 
         <Space
@@ -76,7 +77,6 @@
 
     </LinearLayout>
 
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -91,7 +91,7 @@
             style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="資產" />
+            android:text="營業收入與成本" />
 
         <Space
             android:layout_width="0dp"
@@ -103,10 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="單位 (千元)" />
-
-
     </LinearLayout>
-
 
     <Space
         android:layout_width="match_parent"
@@ -121,10 +118,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="流動資產">
+            android:hint="營業收入">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/currentAsset_tv"
+                android:id="@+id/operatingRevenue_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -142,11 +139,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="非流動資產"
+            android:hint="營業成本"
             android:textColorHint="?attr/colorSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/non_currentAsset_tv"
+                android:id="@+id/operatingCost_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -157,49 +154,19 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="資產總額">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/totalAssets_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:inputType="none"
-            android:textColor="@color/white" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1" />
-
-    <TextView
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="負債" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="流動負債">
+            android:hint="營業毛利">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/currentLiabilities_tv"
+                android:id="@+id/operatingProfit_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -217,10 +184,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="非流動負債">
+            android:hint="營業費用"
+            android:textColorHint="?attr/colorSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/non_currentLiabilities_tv"
+                android:id="@+id/operatingExpenses_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -230,20 +198,48 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="負債總額">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/totalLiabilities_tv"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:inputType="none"
-            android:textColor="@color/white" />
+            android:layout_weight="1"
+            android:hint="營業利益">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/operatingIncome_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="營業外收入及支出"
+            android:textColorHint="?attr/colorSecondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nonOperatingIncome_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
@@ -254,7 +250,7 @@
         style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="權益" />
+        android:text="結算淨利與淨損" />
 
     <Space
         android:layout_width="match_parent"
@@ -269,149 +265,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="股本">
+            android:hint="稅前淨利">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/capital_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/white"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="資本公積">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/capitalSurplus_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/white"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="保留盈餘">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/retainedEarnings_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/white"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="庫藏股票">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/treasuryStock_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/white"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="非控制權益">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nonControllingInterests_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/white"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="其他權益">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/otherEquity_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/white" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="權益總額">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/totalEquityAmount_tv"
+                android:id="@+id/profitBeforeTax_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -429,10 +286,144 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="每股淨值">
+            android:hint="所得稅費用"
+            android:textColorHint="?attr/colorSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/netValuePerShare_tv"
+                android:id="@+id/incomeTaxExpense_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="繼續營業單位淨利">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profitFromContinuingOperations_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="停業單位損益"
+            android:textColorHint="?attr/colorSecondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profitFromDiscontinuedOperations_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="綜合損益">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/comprehensiveIncome_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="其他綜合損益"
+            android:textColorHint="?attr/colorSecondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otherComprehensiveIncome_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="淨利">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/netProfit_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="每股盈餘"
+            android:textColorHint="?attr/colorSecondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/earningsPerShare_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
